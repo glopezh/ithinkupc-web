@@ -1,17 +1,21 @@
 package com.ithinkupc.web.dto;
 import lombok.*;
 
-@ToString
+import javax.persistence.*;
+
 @Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(of={"id"})
-public class PersonaDTO {
+public class PersonaDireccionDTO {
     private Long id;
-    private String dni;
+    private String tipoVia;
     private String nombre;
-    private String apellido;
-    private String telefono;
-    private PersonaDireccionDTO direccionDTO;
+    private String ciudad;
 }
+
+
+
+
+

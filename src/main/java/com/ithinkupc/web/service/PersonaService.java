@@ -8,7 +8,10 @@ import java.util.Set;
 
 public interface PersonaService {
     List<PersonaDTO> findPersonas(PersonaDTO personaDTO);
+
     PersonaDTO findPersona(Long idPersona);
+
     void deletePersona(Long idPersona);
+
     PersonaDTO savePersona(PersonaDTO personaDTO);
 }

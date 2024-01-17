@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @Getter
 @Setter
 @Entity
@@ -12,7 +13,7 @@ import javax.persistence.*;
 public class PersonaDireccion {
     @Id
     @Column(name = "idPersonaDireccion")
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPersona")
@@ -26,5 +27,4 @@ public class PersonaDireccion {
 
     @Column(name = "ciudad")
     private String ciudad;
-
 }

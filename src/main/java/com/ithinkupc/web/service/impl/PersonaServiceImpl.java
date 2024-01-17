@@ -1,14 +1,18 @@
 package com.ithinkupc.web.service.impl;
 
 import com.ithinkupc.web.domain.Persona;
+import com.ithinkupc.web.domain.PersonaDireccion;
 import com.ithinkupc.web.dto.PersonaDTO;
+import com.ithinkupc.web.dto.PersonaDireccionDTO;
 import com.ithinkupc.web.repository.PersonaRepository;
 import com.ithinkupc.web.service.PersonaService;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,21 +61,44 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
 
-    @Override
+    @Transactional
     public PersonaDTO savePersona(PersonaDTO personaDTO) {
-        if(personaDTO.getId() != null) {
-            Persona persona = personaRepository.findById(personaDTO.getId()).get();
-            BeanUtils.copyProperties(personaDTO, persona);
+        if (personaDTO.getId() != null) {
+            Persona persona = personaRepository.findById(personaDTO.getId()).orElseThrow(() -> new EntityNotFoundException("Persona no encontrada"));
+            updatePersonaFromDTO(persona, personaDTO);
             personaRepository.save(persona);
-
         } else {
             Persona persona = new Persona();
             BeanUtils.copyProperties(personaDTO, persona);
             persona.setFechaAlta(Instant.now());
+
+            if (personaDTO.getDireccionDTO() != null) {
+                PersonaDireccionDTO direccionDTO = personaDTO.getDireccionDTO();
+                PersonaDireccion personaDireccion = new PersonaDireccion();
+                personaDireccion.setTipoVia(direccionDTO.getTipoVia());
+                personaDireccion.setNombre(direccionDTO.getNombre());
+                personaDireccion.setCiudad(direccionDTO.getCiudad());
+
+                persona.setPersonaDireccion(personaDireccion);
+            }
+
             persona = personaRepository.saveAndFlush(persona);
             BeanUtils.copyProperties(persona, personaDTO);
         }
         return personaDTO;
     }
+
+    private void updatePersonaFromDTO(Persona persona, PersonaDTO personaDTO) {
+        BeanUtils.copyProperties(personaDTO, persona);
+        // Actualizar también PersonaDireccion si es necesario
+        if (persona.getPersonaDireccion() != null && personaDTO.getDireccionDTO() != null) {
+            PersonaDireccionDTO direccionDTO = personaDTO.getDireccionDTO();
+            PersonaDireccion personaDireccion = persona.getPersonaDireccion();
+            personaDireccion.setTipoVia(direccionDTO.getTipoVia());
+            personaDireccion.setNombre(direccionDTO.getNombre());
+            personaDireccion.setCiudad(direccionDTO.getCiudad());
+        }
+    }
+
 }
 
