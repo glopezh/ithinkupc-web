@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+	<body>
+	
+		<div class="container" th:fragment="menu">
+			<div class="navbar navbar-default">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a id="inici" class="navbar-brand navbar-inici" href="index.html" th:href="@{/}"><strong>IThinkUPC WEB</strong></a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li>
+							<a id="menuPersones" class="menuPersones" href="personaCerca.html" th:href="@{/persona}">Personas</a>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+
+	</body>
+	
+</html>

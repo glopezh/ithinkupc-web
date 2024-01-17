@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ithinkupc
+    username: ithinkupc
+    password: ithinkupc
+    driverClassName: com.mysql.cj.jdbc.Driver
+    max-active: 10
+    max-idle: 8
+    min-idle: 8
+    initial-size: 10
+    validation-query: SELECT 1;
+    test-on-borrow: true
+    test-on-return: false
+    test-while-idle: true
+
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      format-sql: true
+      ddl-auto: none
+      dialect: org.hibernate.dialect.MySQLDialect
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: false
+
+  thymeleaf:
+    cache: false
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    whitelabel:
+      enabled: false
