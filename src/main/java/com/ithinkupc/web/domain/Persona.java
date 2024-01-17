@@ -5,8 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -32,5 +30,8 @@ public class Persona {
 
     @Column(name = "fecha_alta")
     private Instant fechaAlta;
+
+    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
+    private PersonaDireccion personaDireccion;
 
 }

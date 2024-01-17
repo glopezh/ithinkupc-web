@@ -45,7 +45,6 @@ public class PersonaServiceImpl implements PersonaService {
         return personasDTO;
     }
 
-
     @Override
     public PersonaDTO findPersona(Long idPersona) {
         Persona persona = personaRepository.findById(idPersona).orElse(null);
@@ -61,12 +60,12 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
 
+
     @Transactional
     public PersonaDTO savePersona(PersonaDTO personaDTO) {
         if (personaDTO.getId() != null) {
             Persona persona = personaRepository.findById(personaDTO.getId()).orElseThrow(() -> new EntityNotFoundException("Persona no encontrada"));
             updatePersonaFromDTO(persona, personaDTO);
-            personaRepository.save(persona);
         } else {
             Persona persona = new Persona();
             BeanUtils.copyProperties(personaDTO, persona);

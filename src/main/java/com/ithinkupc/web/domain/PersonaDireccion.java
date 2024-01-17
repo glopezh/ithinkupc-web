@@ -5,19 +5,19 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
 @Getter
 @Setter
 @Entity
 @Table(name = "persona_direccion")
 public class PersonaDireccion {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPersonaDireccion")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "idPersona")
-    private Persona idPersona;
+    private Persona persona;
 
     @Column(name = "tipo_via")
     private String tipoVia;

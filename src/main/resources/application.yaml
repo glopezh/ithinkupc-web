@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/ithinkupc
-    username: ithinkupc
-    password: ithinkupc
+    username: root
+    password: Sergi1234
     driverClassName: com.mysql.cj.jdbc.Driver
     max-active: 10
     max-idle: 8
