@@ -10,6 +10,8 @@ import com.ithinkupc.web.service.PersonaService;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,7 +109,6 @@ public class PersonaServiceImpl implements PersonaService {
 
         return personaDTO;
     }
-
     private void actualizarOGuardarDireccion(PersonaDireccionDTO personaDireccionDTO, Persona persona) {
         Long idDireccion = personaDireccionDTO.getId();
 
@@ -126,6 +127,10 @@ public class PersonaServiceImpl implements PersonaService {
             nuevaDireccion.setPersona(persona);
             personaDireccionRepository.save(nuevaDireccion);
         }
+    }
+
+    public List<Persona> getAllPersonas() {
+        return personaRepository.findAll();
     }
 
 }

@@ -26,6 +26,12 @@ Ejemplo: idPersona= 25
 
 ![img3.png](img%2Fimg3.png)
 
+## Tarea 3: Implementar un Endpoint API Rest
+
+Endpoint API Rest Persona
+
+![img6.png](img%2Fimg6.png)
+
 
 
 

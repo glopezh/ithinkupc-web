@@ -17,4 +17,6 @@ public interface PersonaService {
     void deletePersona(Long idPersona);
 
     PersonaDTO savePersonaConDireccion(PersonaDTO personaDTO, PersonaDireccionDTO personaDireccionDTO);
+
+    List<Persona> getAllPersonas();
 }

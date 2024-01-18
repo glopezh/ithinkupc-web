@@ -19,4 +19,5 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
             "AND p.apellidO like %:apellido% "
             ,nativeQuery = true)
     List<Persona> findPersonas(String dni, String nombre, String apellido);
+
 }
