@@ -1,5 +1,6 @@
 package com.ithinkupc.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class PersonaDireccion {
     @Column(name = "idPersonaDireccion")
     private Long id;
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPersona")
     private Persona persona;

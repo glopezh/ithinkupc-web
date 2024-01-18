@@ -1,5 +1,6 @@
 package com.ithinkupc.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,7 @@ public class Persona {
     @Column(name = "fecha_alta")
     private Instant fechaAlta;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
     private PersonaDireccion personaDireccion;
 
