@@ -86,27 +86,22 @@ public class PersonaServiceImpl implements PersonaService {
         Long idPersona = personaDTO.getId();
 
         if (idPersona != null) {
-            // Actualizar persona existente
             Persona persona = personaRepository.findById(idPersona).orElse(null);
 
             if (persona != null) {
                 BeanUtils.copyProperties(personaDTO, persona);
                 persona = personaRepository.save(persona);
 
-                // Actualizar o crear dirección
                 actualizarOGuardarDireccion(personaDireccionDTO, persona);
             }
         } else {
-            // Crear nueva persona
             Persona persona = new Persona();
             BeanUtils.copyProperties(personaDTO, persona);
             persona.setFechaAlta(Instant.now());
             persona = personaRepository.save(persona);
 
-            // Actualizar o crear dirección
             actualizarOGuardarDireccion(personaDireccionDTO, persona);
 
-            // Actualizar personaDTO con el ID generado
             BeanUtils.copyProperties(persona, personaDTO);
         }
 
@@ -117,7 +112,7 @@ public class PersonaServiceImpl implements PersonaService {
         Long idDireccion = personaDireccionDTO.getId();
 
         if (idDireccion != null) {
-            // Actualizar dirección existente
+
             PersonaDireccion personaDireccion = personaDireccionRepository.findById(idDireccion).orElse(null);
 
             if (personaDireccion != null) {
@@ -125,7 +120,7 @@ public class PersonaServiceImpl implements PersonaService {
                 personaDireccionRepository.save(personaDireccion);
             }
         } else {
-            // Crear nueva dirección
+
             PersonaDireccion nuevaDireccion = new PersonaDireccion();
             BeanUtils.copyProperties(personaDireccionDTO, nuevaDireccion);
             nuevaDireccion.setPersona(persona);

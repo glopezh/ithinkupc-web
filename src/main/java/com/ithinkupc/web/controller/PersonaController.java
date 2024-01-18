@@ -1,6 +1,5 @@
 package com.ithinkupc.web.controller;
 
-import com.ithinkupc.web.domain.Persona;
 import com.ithinkupc.web.dto.PersonaDTO;
 import com.ithinkupc.web.dto.PersonaDireccionDTO;
 import com.ithinkupc.web.form.PersonaForm;
@@ -8,9 +7,7 @@ import com.ithinkupc.web.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,7 +40,6 @@ public class PersonaController {
             personaForm.setPersona(personaDTOP);
             return "redirect:/persona/persona-buscar";
         } catch (Exception e) {
-            // Manejo de errores, podrías agregar un mensaje de error al formulario
             return "/persona/persona-crud";
         }
     }
@@ -56,7 +52,6 @@ public class PersonaController {
             personaForm.setPersonas(personasDTO);
             return "/persona/persona-buscar";
         } catch (Exception e) {
-            // Manejo de errores, podrías agregar un mensaje de error al formulario
             return "/persona/persona-buscar";
         }
     }
@@ -65,10 +60,8 @@ public class PersonaController {
     public String deletePersona(@PathVariable("id") Long idPersona, PersonaForm personaForm) {
         try {
             personaService.deletePersona(idPersona);
-            // Puedes redirigir al usuario a la página de búsqueda
             return "redirect:/persona/persona-buscar";
         } catch (Exception e) {
-            // Manejo de errores, podrías agregar un mensaje de error al formulario
             return "/persona/persona-buscar";
         }
     }
@@ -80,7 +73,6 @@ public class PersonaController {
             personaForm.setPersona(personaDTO);
             return "/persona/persona-crud";
         } catch (Exception e) {
-            // Manejo de errores, podrías agregar un mensaje de error al formulario
             return "/persona/persona-crud";
         }
     }

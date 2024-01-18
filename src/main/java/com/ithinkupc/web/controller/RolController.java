@@ -38,7 +38,6 @@ public class RolController {
             rolForm.setRoles(rolesDTO);
             return "/rol/rol-buscar";
         } catch (Exception e) {
-            // Manejo de errores, podrías agregar un mensaje de error al formulario
             return "/rol/rol-buscar";
         }
     }
