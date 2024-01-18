@@ -4,6 +4,7 @@ import com.ithinkupc.web.domain.Persona;
 import com.ithinkupc.web.domain.PersonaDireccion;
 import com.ithinkupc.web.dto.PersonaDTO;
 import com.ithinkupc.web.dto.PersonaDireccionDTO;
+import com.ithinkupc.web.repository.PersonaDireccionRepository;
 import com.ithinkupc.web.repository.PersonaRepository;
 import com.ithinkupc.web.service.PersonaService;
 import lombok.Data;
@@ -75,7 +76,7 @@ public class PersonaServiceImpl implements PersonaService {
                 PersonaDireccionDTO direccionDTO = personaDTO.getDireccionDTO();
                 PersonaDireccion personaDireccion = new PersonaDireccion();
                 personaDireccion.setTipoVia(direccionDTO.getTipoVia());
-                personaDireccion.setNombre(direccionDTO.getNombre());
+                personaDireccion.setNombreVia(direccionDTO.getNombreVia());
                 personaDireccion.setCiudad(direccionDTO.getCiudad());
 
                 persona.setPersonaDireccion(personaDireccion);
@@ -94,7 +95,7 @@ public class PersonaServiceImpl implements PersonaService {
             PersonaDireccionDTO direccionDTO = personaDTO.getDireccionDTO();
             PersonaDireccion personaDireccion = persona.getPersonaDireccion();
             personaDireccion.setTipoVia(direccionDTO.getTipoVia());
-            personaDireccion.setNombre(direccionDTO.getNombre());
+            personaDireccion.setNombreVia(direccionDTO.getNombreVia());
             personaDireccion.setCiudad(direccionDTO.getCiudad());
         }
     }

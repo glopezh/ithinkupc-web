@@ -15,7 +15,7 @@ public class PersonaDireccion {
     @Column(name = "idPersonaDireccion")
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPersona")
     private Persona persona;
 
@@ -23,7 +23,7 @@ public class PersonaDireccion {
     private String tipoVia;
 
     @Column(name = "nombre")
-    private String nombre;
+    private String nombreVia;
 
     @Column(name = "ciudad")
     private String ciudad;

@@ -35,33 +35,51 @@ public class PersonaController {
 
     @PostMapping("/guardar")
     public String personaGuardar(PersonaForm personaForm) {
-        PersonaDTO personaDTO = personaForm.getPersona();
-        PersonaDTO personaDTOP =  personaService.savePersona(personaDTO);
-        personaForm.setPersona(personaDTOP);
-        return "/persona/persona-crud";
+        try {
+            PersonaDTO personaDTO = personaForm.getPersona();
+            PersonaDTO personaDTOP = personaService.savePersona(personaDTO);
+            personaForm.setPersona(personaDTOP);
+            return "redirect:/persona/persona-buscar";
+        } catch (Exception e) {
+            // Manejo de errores, podrías agregar un mensaje de error al formulario
+            return "/persona/persona-crud";
+        }
     }
 
     @GetMapping("/persona-buscar")
     public String personaBuscar(PersonaForm personaForm) {
-        PersonaDTO personaDTO = personaForm.getPersona();
-        List<PersonaDTO> personasDTO = personaService.findPersonas(personaDTO);
-        personaForm.setPersonas(personasDTO);
-        return "/persona/persona-buscar";
+        try {
+            PersonaDTO personaDTO = personaForm.getPersona();
+            List<PersonaDTO> personasDTO = personaService.findPersonas(personaDTO);
+            personaForm.setPersonas(personasDTO);
+            return "/persona/persona-buscar";
+        } catch (Exception e) {
+            // Manejo de errores, podrías agregar un mensaje de error al formulario
+            return "/persona/persona-buscar";
+        }
     }
-
 
     @GetMapping("/delete/{id}")
     public String deletePersona(@PathVariable("id") Long idPersona, PersonaForm personaForm) {
-       personaService.deletePersona(idPersona);
-       return "/persona/persona-buscar";
+        try {
+            personaService.deletePersona(idPersona);
+            // Puedes redirigir al usuario a la página de búsqueda
+            return "redirect:/persona/persona-buscar";
+        } catch (Exception e) {
+            // Manejo de errores, podrías agregar un mensaje de error al formulario
+            return "/persona/persona-buscar";
+        }
     }
 
     @GetMapping("/{id}")
     public String findPersona(@PathVariable("id") Long idPersona, PersonaForm personaForm) {
-        PersonaDTO personaDTO = personaService.findPersona(idPersona);
-        personaForm.setPersona(personaDTO);
-        return "/persona/persona-crud";
+        try {
+            PersonaDTO personaDTO = personaService.findPersona(idPersona);
+            personaForm.setPersona(personaDTO);
+            return "/persona/persona-crud";
+        } catch (Exception e) {
+            // Manejo de errores, podrías agregar un mensaje de error al formulario
+            return "/persona/persona-crud";
+        }
     }
-
-
 }

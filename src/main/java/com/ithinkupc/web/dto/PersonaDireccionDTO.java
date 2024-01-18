@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class PersonaDireccionDTO {
     private Long id;
     private String tipoVia;
-    private String nombre;
+    private String nombreVia;
     private String ciudad;
 }
 
