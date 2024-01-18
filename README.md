@@ -32,6 +32,10 @@ Endpoint API Rest Persona
 
 ![img6.png](img%2Fimg6.png)
 
+Visualización en el postman
+
+![img7.png](img%2Fimg7.png)
+
 
 
 
