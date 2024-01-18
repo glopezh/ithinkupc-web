@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +21,11 @@ import java.util.List;
 @Data
 public class PersonaServiceImpl implements PersonaService {
     private PersonaRepository personaRepository;
+    private PersonaDireccionRepository personaDireccionRepository;
 
-    @Autowired
-    public PersonaServiceImpl(PersonaRepository personaRepository){
+    public PersonaServiceImpl(PersonaRepository personaRepository, PersonaDireccionRepository personaDireccionRepository) {
         this.personaRepository = personaRepository;
+        this.personaDireccionRepository = personaDireccionRepository;
     }
 
     @Override
@@ -37,13 +37,33 @@ public class PersonaServiceImpl implements PersonaService {
         List<Persona> personas = personaRepository.findPersonas(dni, nombre, apellido);
         List<PersonaDTO> personasDTO = new ArrayList<>();
 
-        for(Persona persona : personas) {
+        for (Persona persona : personas) {
             personaDTO = new PersonaDTO();
             BeanUtils.copyProperties(persona, personaDTO);
             personasDTO.add(personaDTO);
         }
 
         return personasDTO;
+    }
+
+    @Override
+    public List<PersonaDireccionDTO> findDirecciones(PersonaDireccionDTO personaDireccionDTO) {
+
+        Long persona = personaDireccionDTO.getPersona();
+        String tipoVia = personaDireccionDTO.getTipoVia();
+        String nombreVia = personaDireccionDTO.getNombreVia();
+        String ciudad = personaDireccionDTO.getCiudad();
+
+        List<PersonaDireccion> personasDirecciones = personaDireccionRepository.findDirecciones(persona,tipoVia, nombreVia, ciudad);
+        List<PersonaDireccionDTO> personasDireccionesDTO = new ArrayList<>();
+
+        for (PersonaDireccion personaDireccion : personasDirecciones) {
+            personaDireccionDTO = new PersonaDireccionDTO();
+            BeanUtils.copyProperties(personaDireccion, personaDireccionDTO);
+            personasDireccionesDTO.add(personaDireccionDTO);
+        }
+
+        return personasDireccionesDTO;
     }
 
     @Override
@@ -60,43 +80,56 @@ public class PersonaServiceImpl implements PersonaService {
         personaRepository.deleteById(idPersona);
     }
 
-
-
+    @Override
     @Transactional
-    public PersonaDTO savePersona(PersonaDTO personaDTO) {
-        if (personaDTO.getId() != null) {
-            Persona persona = personaRepository.findById(personaDTO.getId()).orElseThrow(() -> new EntityNotFoundException("Persona no encontrada"));
-            updatePersonaFromDTO(persona, personaDTO);
+    public PersonaDTO savePersonaConDireccion(PersonaDTO personaDTO, PersonaDireccionDTO personaDireccionDTO) {
+        Long idPersona = personaDTO.getId();
+
+        if (idPersona != null) {
+            // Actualizar persona existente
+            Persona persona = personaRepository.findById(idPersona).orElse(null);
+
+            if (persona != null) {
+                BeanUtils.copyProperties(personaDTO, persona);
+                persona = personaRepository.save(persona);
+
+                // Actualizar o crear dirección
+                actualizarOGuardarDireccion(personaDireccionDTO, persona);
+            }
         } else {
+            // Crear nueva persona
             Persona persona = new Persona();
             BeanUtils.copyProperties(personaDTO, persona);
             persona.setFechaAlta(Instant.now());
+            persona = personaRepository.save(persona);
 
-            if (personaDTO.getDireccionDTO() != null) {
-                PersonaDireccionDTO direccionDTO = personaDTO.getDireccionDTO();
-                PersonaDireccion personaDireccion = new PersonaDireccion();
-                personaDireccion.setTipoVia(direccionDTO.getTipoVia());
-                personaDireccion.setNombreVia(direccionDTO.getNombreVia());
-                personaDireccion.setCiudad(direccionDTO.getCiudad());
+            // Actualizar o crear dirección
+            actualizarOGuardarDireccion(personaDireccionDTO, persona);
 
-                persona.setPersonaDireccion(personaDireccion);
-            }
-
-            persona = personaRepository.saveAndFlush(persona);
+            // Actualizar personaDTO con el ID generado
             BeanUtils.copyProperties(persona, personaDTO);
         }
+
         return personaDTO;
     }
 
-    private void updatePersonaFromDTO(Persona persona, PersonaDTO personaDTO) {
-        BeanUtils.copyProperties(personaDTO, persona);
-        // Actualizar también PersonaDireccion si es necesario
-        if (persona.getPersonaDireccion() != null && personaDTO.getDireccionDTO() != null) {
-            PersonaDireccionDTO direccionDTO = personaDTO.getDireccionDTO();
-            PersonaDireccion personaDireccion = persona.getPersonaDireccion();
-            personaDireccion.setTipoVia(direccionDTO.getTipoVia());
-            personaDireccion.setNombreVia(direccionDTO.getNombreVia());
-            personaDireccion.setCiudad(direccionDTO.getCiudad());
+    private void actualizarOGuardarDireccion(PersonaDireccionDTO personaDireccionDTO, Persona persona) {
+        Long idDireccion = personaDireccionDTO.getId();
+
+        if (idDireccion != null) {
+            // Actualizar dirección existente
+            PersonaDireccion personaDireccion = personaDireccionRepository.findById(idDireccion).orElse(null);
+
+            if (personaDireccion != null) {
+                BeanUtils.copyProperties(personaDireccionDTO, personaDireccion);
+                personaDireccionRepository.save(personaDireccion);
+            }
+        } else {
+            // Crear nueva dirección
+            PersonaDireccion nuevaDireccion = new PersonaDireccion();
+            BeanUtils.copyProperties(personaDireccionDTO, nuevaDireccion);
+            nuevaDireccion.setPersona(persona);
+            personaDireccionRepository.save(nuevaDireccion);
         }
     }
 

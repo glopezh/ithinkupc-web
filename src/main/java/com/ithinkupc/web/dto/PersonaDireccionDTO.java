@@ -13,6 +13,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(of={"id"})
 public class PersonaDireccionDTO {
     private Long id;
+    private Long persona;
     private String tipoVia;
     private String nombreVia;
     private String ciudad;

@@ -2,6 +2,7 @@ package com.ithinkupc.web.controller;
 
 import com.ithinkupc.web.domain.Persona;
 import com.ithinkupc.web.dto.PersonaDTO;
+import com.ithinkupc.web.dto.PersonaDireccionDTO;
 import com.ithinkupc.web.form.PersonaForm;
 import com.ithinkupc.web.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,8 @@ public class PersonaController {
     public String personaGuardar(PersonaForm personaForm) {
         try {
             PersonaDTO personaDTO = personaForm.getPersona();
-            PersonaDTO personaDTOP = personaService.savePersona(personaDTO);
+            PersonaDireccionDTO personaDireccionDTO = personaForm.getPersonaDireccion();
+            PersonaDTO personaDTOP = personaService.savePersonaConDireccion(personaDTO,personaDireccionDTO);
             personaForm.setPersona(personaDTOP);
             return "redirect:/persona/persona-buscar";
         } catch (Exception e) {
