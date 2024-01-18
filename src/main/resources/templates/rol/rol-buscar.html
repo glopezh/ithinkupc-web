@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
+	  xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<title>Buscar Rol</title>
+	</head>
+
+	<body>
+		<div class="container" layout:fragment="content">
+
+			<div class="panel panel-primary">
+			
+				<div class="panel-heading">
+					<h3 class="panel-title">Buscar Rol</h3>
+				</div>
+				
+				<div class="panel-body">
+					<form id="formRolBuscar" class="form-horizontal" th:object="${rolForm}" th:action="@{/rol/rol-buscar}" th:method="post">
+						 <input type="hidden" id="id" name="id"/>
+						 
+						 <div class="form-group">
+						   	<label for="rol" class="col-md-3 control-label">Rol</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" id="rol" name="rol.nombre" />
+						   	</div>
+						 </div>
+
+						 <div class="form-group">
+						 	<div class="col-md-offset-3 col-md-4">
+						 		<button id="buscar" type="button" class="btn btn-default">Buscar</button>
+								<button id="limpiar" type="button" class="js-volver btn btn-primary">Limpiar</button>
+							</div>
+							 <div class="col-md-4 text-right">
+								 <button id="alta" type="button" class="js-volver btn btn-default">Alta</button>
+							 </div>
+						 </div>
+
+					
+							<div class="panel panel-info">
+								<div class="panel-heading">
+									<label class="control-label">Listado de Roles</label>
+								</div>
+								<div class="table-responsive">
+									<table class="table table-striped ">
+										<thead>
+											<tr>
+												<th class="col-md-2">Nombre</th>
+												<th class="col-md-3 text-center">Acción</th>
+											</tr>
+										</thead>
+										<tbody id="registros-rol">
+										<tr th:if="${rolForm.roles.isEmpty()}">
+											<td colspan="12" class="text-center">No existe ningún registro</td>
+										</tr>
+										<tr th:each="rol : ${rolForm.roles}" th:if="${not rolForm.roles.isEmpty()}" >
+											<td th:text="${rol.nombre}"></td>
+											<td class="text-center">
+												<button class="btn btn-default btn-sm eliminar-rol" type="button" title="Eliminar" th:attr="data-id-rol=${rol.id}">
+													<i class="fa fa-trash-o"></i>
+												</button>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+					</form>
+				</div>
+			</div>
+	
+		</div>
+	</body>
+
+
+	<script layout:fragment="custom-javascript"  th:src="@{/js/rol/rol-buscar.js}"></script>
+
+
+</html>
