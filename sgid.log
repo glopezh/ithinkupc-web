@@ -12191,3 +12191,7 @@ org.thymeleaf.exceptions.TemplateInputException: Error resolving template [/pers
 2024-01-18 06:21:11,161 DEBUG [restartedMain] c.i.w.WebApplication [StartupInfoLogger.java:56] Running with Spring Boot v2.7.8, Spring v5.3.25
 2024-01-18 06:21:11,161 INFO [restartedMain] c.i.w.WebApplication [SpringApplication.java:631] No active profile set, falling back to 1 default profile: "default"
 2024-01-18 06:21:11,526 INFO [restartedMain] c.i.w.WebApplication [StartupInfoLogger.java:61] Started WebApplication in 0.385 seconds (JVM running for 6354.07)
+2024-01-18 06:33:09,044 INFO [restartedMain] c.i.w.WebApplication [StartupInfoLogger.java:55] Starting WebApplication using Java 11.0.21 on MacBook-Pro-de-Geraldine-2.local with PID 12587 (/Users/geraldinelopez/ithinkupc-web/target/classes started by geraldinelopez in /Users/geraldinelopez/ithinkupc-web)
+2024-01-18 06:33:09,045 DEBUG [restartedMain] c.i.w.WebApplication [StartupInfoLogger.java:56] Running with Spring Boot v2.7.8, Spring v5.3.25
+2024-01-18 06:33:09,045 INFO [restartedMain] c.i.w.WebApplication [SpringApplication.java:631] No active profile set, falling back to 1 default profile: "default"
+2024-01-18 06:33:09,669 INFO [restartedMain] c.i.w.WebApplication [StartupInfoLogger.java:61] Started WebApplication in 0.668 seconds (JVM running for 7072.251)
